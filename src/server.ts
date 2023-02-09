@@ -15,7 +15,8 @@ app.get('/api/foods', (req, res) => {
 
 app.get('/api/foods/search/:searchTerm', (req, res) => {
     const searchTerm = req.params.searchTerm.toLowerCase();
-    res.send(sample_foods.filter(food => food.name.toLowerCase().includes(searchTerm)))
+    const foods = sample_foods.filter(food => food.name.toLowerCase().includes(searchTerm));
+    res.send(foods);
 })
 
 const PORT = 3000;
