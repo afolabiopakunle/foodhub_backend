@@ -27,7 +27,13 @@ app.get('/api/foods/tags/:tagName', (req, res) => {
     const tagName = req.params.tagName.toLowerCase();
     const foods = sample_foods.filter(food => food.tags.map((tag: string) => tag.toLowerCase()).includes(tagName));
     res.send(foods);
-})
+});
+
+app.get('/api/foods/:foodId', (req, res) => {
+    const foodId = req.params.foodId;
+    const food = sample_foods.find(food => food.id == foodId);
+    res.send(food);
+});
 
 const PORT = 3000;
 app.listen(PORT, () => console.log(`App listening on port ${PORT}`) )
