@@ -2,7 +2,8 @@ import express from "express";
 import cors from "cors";
 import jwt from "jsonwebtoken";
 
-import { sample_foods, sample_tags, sample_users } from './data';
+import { sample_users } from './data';
+import foodRouter from './routers/foodRouter';
 
 const app = express();
 
@@ -13,31 +14,8 @@ app.use(cors({
     origin:["http://localhost:4200"],
 }));
 
-app.get('/api/foods', (req, res) => {
-    res.send(sample_foods);
-});
 
-app.get('/api/foods/search/:searchTerm', (req, res) => {
-    const searchTerm = req.params.searchTerm.toLowerCase();
-    const foods = sample_foods.filter(food => food.name.toLowerCase().includes(searchTerm));
-    res.send(foods);
-});
-
-app.get('/api/foods/tags', (req, res) => {
-    res.send(sample_tags);
-});
-
-app.get('/api/foods/tags/:tagName', (req, res) => {
-    const tagName = req.params.tagName.toLowerCase();
-    const foods = sample_foods.filter(food => food.tags.map((tag: string) => tag.toLowerCase()).includes(tagName));
-    res.send(foods);
-});
-
-app.get('/api/foods/:foodId', (req, res) => {
-    const foodId = req.params.foodId;
-    const food = sample_foods.find(food => food.id == foodId);
-    res.send(food);
-});
+app.use("/api/foods", foodRouter);
 
 app.post('/api/users/login', (req, res) => {
     const { email, password } = req.body;
